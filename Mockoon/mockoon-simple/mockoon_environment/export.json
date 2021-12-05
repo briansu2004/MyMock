@@ -1,0 +1,257 @@
+{
+    "source": "mockoon:1.17.0",
+    "data": [
+        {
+            "type": "environment",
+            "item": {
+                "uuid": "d70e4264-fd39-4de7-afcb-fca02192f846",
+                "lastMigration": 19,
+                "name": "Demo API",
+                "endpointPrefix": "",
+                "latency": 0,
+                "port": 3000,
+                "hostname": "127.0.0.1",
+                "routes": [
+                    {
+                        "uuid": "3e8faba7-ea34-46f4-b43c-a4b035ccfa7f",
+                        "documentation": "Generate random body (JSON, text, CSV, etc) with templating",
+                        "method": "get",
+                        "endpoint": "users",
+                        "responses": [
+                            {
+                                "uuid": "daecbc8a-993a-4a58-90a2-43347ed878ea",
+                                "body": "{\n  \"Templating example\": \"For more information about templating, click the blue 'i' above this editor\",\n  \"users\": [\n    {{# repeat (queryParam 'total' '10') }}\n      {\n        \"userId\": \"{{ faker 'random.number' min=10000 max=100000 }}\",\n        \"firstname\": \"{{ faker 'name.firstName' }}\",\n        \"lastname\": \"{{ faker 'name.lastName' }}\",\n        \"friends\": [\n          {{# repeat (faker 'random.number' 5) }}\n            {\n              \"id\": \"{{ faker 'random.uuid' }}\"\n            }\n          {{/ repeat }}\n        ]\n      },\n    {{/ repeat }}\n  ],\n  \"total\": \"{{queryParam 'total' '10'}}\"\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "Creates 10 random users, or the amount specified in the 'total' query param",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false,
+                                "fallbackTo404": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false,
+                        "sequentialResponse": false
+                    },
+                    {
+                        "uuid": "386c3c4f-d24a-4c70-85c8-6fb08160edfb",
+                        "documentation": "Use multiple responses with rules",
+                        "method": "post",
+                        "endpoint": "content/:param1",
+                        "responses": [
+                            {
+                                "uuid": "7c8da426-578e-467b-959c-3ba4aa2437d5",
+                                "body": "{\n  \"Rules example\": \"Default response. Served if route param 'param1' is not present.\"\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "Default response",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false,
+                                "fallbackTo404": false
+                            },
+                            {
+                                "uuid": "b2131531-bf78-4425-84f6-5bd2cb744c68",
+                                "body": "{\n  \"Rules example\": \"Content XYZ. Served if route param 'param1' equals 'xyz'. (See in 'Rules' tab)\"\n}",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "Content XYZ",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [
+                                    {
+                                        "target": "params",
+                                        "modifier": "param1",
+                                        "value": "xyz",
+                                        "operator": "equals"
+                                    }
+                                ],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false,
+                                "fallbackTo404": false
+                            },
+                            {
+                                "uuid": "dbed6900-a8b2-4116-a53f-0946cb05f264",
+                                "body": "{\n  \"Rules example\": \"Content not found. Served if route param 'param1' is not equal to 'xyz'. (See in 'Rules' tab)\"\n}\n",
+                                "latency": 0,
+                                "statusCode": 404,
+                                "label": "Content not found",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [
+                                    {
+                                        "target": "params",
+                                        "modifier": "param1",
+                                        "value": "^(?!.*xyz).*$",
+                                        "operator": "regex"
+                                    }
+                                ],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false,
+                                "fallbackTo404": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false,
+                        "sequentialResponse": false
+                    },
+                    {
+                        "uuid": "1c86d37c-5f4f-4953-b27c-33f4a6928b86",
+                        "documentation": "Serve a file dynamically depending on the path param 'pageName'.",
+                        "method": "get",
+                        "endpoint": "file/:pageName",
+                        "responses": [
+                            {
+                                "uuid": "ee1fdf07-c7f2-4a6b-bc2f-ff2ea20b30e5",
+                                "body": "",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "Templating is also supported in file path",
+                                "headers": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "text/html"
+                                    }
+                                ],
+                                "filePath": "./page{{urlParam 'pageName'}}.html",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false,
+                                "fallbackTo404": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false,
+                        "sequentialResponse": false
+                    },
+                    {
+                        "uuid": "270e452f-7536-4230-9a3c-d35c41cffaa3",
+                        "documentation": "Path supports various patterns",
+                        "method": "put",
+                        "endpoint": "path/with/pattern(s)?/*",
+                        "responses": [
+                            {
+                                "uuid": "19a1154a-4590-47f4-a8b3-465a50806cca",
+                                "body": "The current path will match the following routes: \nhttp://localhost:3000/path/with/pattern/\nhttp://localhost:3000/path/with/patterns/\nhttp://localhost:3000/path/with/patterns/anything-else\n\nLearn more about Mockoon's routing: https://mockoon.com/docs/latest/routing",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "",
+                                "headers": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "text/plain"
+                                    }
+                                ],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false,
+                                "fallbackTo404": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false,
+                        "sequentialResponse": false
+                    },
+                    {
+                        "uuid": "ab1a624d-0d15-444f-a7f0-7da3159d096e",
+                        "documentation": "Can Mockoon forward or record entering requests?",
+                        "method": "get",
+                        "endpoint": "forward-and-record",
+                        "responses": [
+                            {
+                                "uuid": "4513f5e3-4b90-4615-b97f-f2ea58394a14",
+                                "body": "Mockoon can also act as a proxy and forward all entering requests that are not caught by declared routes. \nYou can activate this option in the environment settings ('cog' icon in the upper right corner). \nTo learn more: https://mockoon.com/docs/latest/proxy-mode\n\nAs always, all entering requests, and responses from the proxied server will be recorded ('clock' icon in the upper right corner).\nTo learn more: https://mockoon.com/docs/latest/requests-logging",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "",
+                                "headers": [
+                                    {
+                                        "key": "Content-Type",
+                                        "value": "text/plain"
+                                    }
+                                ],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false,
+                                "fallbackTo404": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false,
+                        "sequentialResponse": false
+                    },
+                    {
+                        "uuid": "142a215c-4fd7-4d1d-aaa2-e92c31a51e43",
+                        "documentation": "Get a user",
+                        "method": "get",
+                        "endpoint": "users/:username",
+                        "responses": [
+                            {
+                                "uuid": "44256c9f-cd4b-4157-985a-bfedf851413b",
+                                "body": "{\r\n  \"login\": \"briansu2004\",\r\n  \"id\": 6775994,\r\n  \"node_id\": \"MDQ6VXNlcjY3NzU5OTQ=\",\r\n  \"avatar_url\": \"https://avatars.githubusercontent.com/u/6775994?v=4\",\r\n  \"gravatar_id\": \"\",\r\n  \"url\": \"https://api.github.com/users/briansu2004\",\r\n  \"html_url\": \"https://github.com/briansu2004\",\r\n  \"followers_url\": \"https://api.github.com/users/briansu2004/followers\",\r\n  \"following_url\": \"https://api.github.com/users/briansu2004/following{/other_user}\",\r\n  \"gists_url\": \"https://api.github.com/users/briansu2004/gists{/gist_id}\",\r\n  \"starred_url\": \"https://api.github.com/users/briansu2004/starred{/owner}{/repo}\",\r\n  \"subscriptions_url\": \"https://api.github.com/users/briansu2004/subscriptions\",\r\n  \"organizations_url\": \"https://api.github.com/users/briansu2004/orgs\",\r\n  \"repos_url\": \"https://api.github.com/users/briansu2004/repos\",\r\n  \"events_url\": \"https://api.github.com/users/briansu2004/events{/privacy}\",\r\n  \"received_events_url\": \"https://api.github.com/users/briansu2004/received_events\",\r\n  \"type\": \"User\",\r\n  \"site_admin\": false,\r\n  \"name\": \"Brian Su\",\r\n  \"company\": \"Sutek\",\r\n  \"blog\": \"https://www.linkedin.com/in/brian-su-opentowork/\",\r\n  \"location\": \"Toronto\",\r\n  \"email\": null,\r\n  \"hireable\": true,\r\n  \"bio\": \"AWS,GCP,Azure;React,node,Golang,Python,FullStack;DevOps,CICDpipeline,Docker;Data,AI;Ontology;IBM,Informatica,Collibra\",\r\n  \"twitter_username\": null,\r\n  \"public_repos\": 645,\r\n  \"public_gists\": 5,\r\n  \"followers\": 0,\r\n  \"following\": 21,\r\n  \"created_at\": \"2014-02-24T21:34:33Z\",\r\n  \"updated_at\": \"2021-12-03T19:44:58Z\"\r\n}\r\n",
+                                "latency": 0,
+                                "statusCode": 200,
+                                "label": "",
+                                "headers": [],
+                                "filePath": "",
+                                "sendFileAsBody": false,
+                                "rules": [],
+                                "rulesOperator": "OR",
+                                "disableTemplating": false,
+                                "fallbackTo404": false
+                            }
+                        ],
+                        "enabled": true,
+                        "randomResponse": false,
+                        "sequentialResponse": false
+                    }
+                ],
+                "proxyMode": false,
+                "proxyHost": "",
+                "proxyRemovePrefix": false,
+                "tlsOptions": {
+                    "enabled": false,
+                    "type": "CERT",
+                    "pfxPath": "",
+                    "certPath": "",
+                    "keyPath": "",
+                    "caPath": "",
+                    "passphrase": ""
+                },
+                "cors": true,
+                "headers": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "proxyReqHeaders": [
+                    {
+                        "key": "",
+                        "value": ""
+                    }
+                ],
+                "proxyResHeaders": [
+                    {
+                        "key": "",
+                        "value": ""
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+  "welcomeShown": true,
+  "analytics": false,
+  "bannerDismissed": [],
+  "logSizeLimit": 10000,
+  "maxLogsPerEnvironment": 50,
+  "truncateRouteName": true,
+  "environmentMenuSize": 100,
+  "routeMenuSize": 252,
+  "logsMenuSize": 150,
+  "fakerLocale": "en",
+  "fakerSeed": null,
+  "lastChangelog": "1.17.0",
+  "environments": [
+    {
+      "uuid": "d70e4264-fd39-4de7-afcb-fca02192f846",
+      "path": "C:\\Users\\x239757\\AppData\\Roaming\\mockoon\\storage\\demo.json"
+    }
+  ],
+  "enableTelemetry": false,
+  "storagePrettyPrint": true
+}

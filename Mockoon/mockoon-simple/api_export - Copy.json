@@ -1,0 +1,75 @@
+{
+  "source": "mockoon:1.17.0",
+  "data": [
+    {
+      "type": "environment",
+      "item": {
+        "uuid": "d70e4264-fd39-4de7-afcb-fca02192f846",
+        "lastMigration": 19,
+        "name": "Demo API",
+        "endpointPrefix": "",
+        "latency": 0,
+        "port": 3000,
+        "hostname": "localhost",
+        "routes": [
+          {
+            "uuid": "142a215c-4fd7-4d1d-aaa2-e92c31a51e43",
+            "documentation": "Mock GitHub User API - get a user",
+            "method": "get",
+            "endpoint": "users/:username",
+            "responses": [
+              {
+                "uuid": "44256c9f-cd4b-4157-985a-bfedf851413b",
+                "body": "{\r\n  \"login\": \"briansu2004\",\r\n  \"id\": 6775994,\r\n  \"node_id\": \"MDQ6VXNlcjY3NzU5OTQ=\",\r\n  \"avatar_url\": \"https://avatars.githubusercontent.com/u/6775994?v=4\",\r\n  \"description\": \"This is the mock response\"\r\n}\r\n",
+                "latency": 0,
+                "statusCode": 200,
+                "label": "",
+                "headers": [],
+                "filePath": "",
+                "sendFileAsBody": false,
+                "rules": [],
+                "rulesOperator": "OR",
+                "disableTemplating": false,
+                "fallbackTo404": false
+              }
+            ],
+            "enabled": true,
+            "randomResponse": false,
+            "sequentialResponse": false
+          }
+        ],
+        "proxyMode": false,
+        "proxyHost": "",
+        "proxyRemovePrefix": false,
+        "tlsOptions": {
+          "enabled": false,
+          "type": "CERT",
+          "pfxPath": "",
+          "certPath": "",
+          "keyPath": "",
+          "caPath": "",
+          "passphrase": ""
+        },
+        "cors": true,
+        "headers": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "proxyReqHeaders": [
+          {
+            "key": "",
+            "value": ""
+          }
+        ],
+        "proxyResHeaders": [
+          {
+            "key": "",
+            "value": ""
+          }
+        ]
+      }
+    }
+  ]
+}
